@@ -1,11 +1,10 @@
 # vulners-scanner
-# Desciption
-PoC of a host-based vulnerability scanner, which uses vulners.com API. Detects operating system, collect installed packages and check vulnerabilities in it.
+# Description
+PoC of a host-based vulnerability scanner, which uses vulners.com API. Detects operating system, collects installed packages and checks vulnerabilities in it.
 # Supported OS
 Currently support collecting packages for these operating systems:
 * Debian-based (debian, kali, ubuntu)
 * Rhel-based (redhat, centos, fedora)
-# Use
 
 # Docker support
 Experimental support of detecting vulnerabilities in running docker containters
