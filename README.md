@@ -6,15 +6,17 @@ Currently support collecting packages for these operating systems:
 * Debian-based (debian, kali, ubuntu)
 * Rhel-based (redhat, centos, fedora)
 
-# Docker support
-Experimental support of detecting vulnerabilities in running docker containters
+# Python version
+Lazy and Advanced versions were tested on a python2.6, python2.7, python3.5. If you found any bugs, don't hesitate to open issue
 
+# Docker support
+Experimental support of detecting vulnerabilities in running docker containers (only advanced script). Need to activate it changing `checkDocker=False` to `checkDocker=True` in linuxScanner.py
 
 # How to use
 * Lazy scanner
-The simplest script to show vulners API capabilities. Just run script and it will return all found vulnerabilities:
+The simplest script to show vulners.com API capabilities. Just run script and it will return all found vulnerabilities:
 ```
-#python2.6 lazyScanner.py
+#python lazyScanner.py
 OS Name - debian, OS Version - 8
 Total provided packages: 315
 {
@@ -72,4 +74,38 @@ DSA-3644
 DSA-3626
 ```
 
+* Advanced scanner
+Detect OS in a several ways. Supports running docker containers scan (need to activate manually in a file)
+```
+python linuxScanner.py
+====================
+Host info - Host machine
+OS Name - Darwin, OS Version - 15.6.0
+Total provided packages: 0
+====================
+Host info - docker container "centos:6"
+OS Name - centos, OS Version - 6
+Total provided packages: 131
+{
+    "result": "OK",
+    "data": {
+        "packages": {},
+        "vulnerabilities": []
+    }
+}
+Vulnerabilities:
+
+====================
+Host info - docker container "debian:7"
+OS Name - debian, OS Version - 7
+Total provided packages: 80
+{
+    "result": "OK",
+    "data": {
+        "packages": {},
+        "vulnerabilities": []
+    }
+}
+Vulnerabilities:
+```
 
