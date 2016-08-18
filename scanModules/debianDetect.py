@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 __author__ = 'videns'
-from linuxDetect import linuxDetect
 import re
+
+from scanModules.linuxDetect import linuxDetect
+
 
 class debBasedDetect(linuxDetect):
     def __init__(self,sshPrefix):

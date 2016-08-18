@@ -1,4 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
 __author__ = 'videns'
 try:
     import urllib.request as urllib2

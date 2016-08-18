@@ -13,10 +13,13 @@ Lazy and Advanced versions were tested on a python2.6, python2.7, python3.5. If 
 Experimental support of detecting vulnerabilities in running docker containers (only advanced script). Need to activate it changing `checkDocker=False` to `checkDocker=True` in linuxScanner.py
 
 # How to use
+
 * Lazy scanner
 The simplest script to show vulners.com API capabilities. Just run script and it will return all found vulnerabilities:
 ```
-#python lazyScanner.py
+# git clone https://github.com/videns/vulners-scanner
+# cd vulners-scanner
+# ./lazyScanner.py
 OS Name - debian, OS Version - 8
 Total provided packages: 315
 {
@@ -74,38 +77,37 @@ DSA-3644
 DSA-3626
 ```
 
-* Advanced scanner
+* Advanced scanner.
 Detect OS in a several ways. Supports running docker containers scan (need to activate manually in a file)
 ```
-python linuxScanner.py
-====================
+# git clone https://github.com/videns/vulners-scanner
+# cd vulners-scanner
+# ./linuxScanner.py
+
+             _
+__   ___   _| |_ __   ___ _ __ ___
+\ \ / / | | | | '_ \ / _ \ '__/ __|
+ \ V /| |_| | | | | |  __/ |  \__ \
+  \_/  \__,_|_|_| |_|\___|_|  |___/
+
+==========================================
 Host info - Host machine
 OS Name - Darwin, OS Version - 15.6.0
-Total provided packages: 0
-====================
-Host info - docker container "centos:6"
-OS Name - centos, OS Version - 6
-Total provided packages: 131
-{
-    "result": "OK",
-    "data": {
-        "packages": {},
-        "vulnerabilities": []
-    }
-}
-Vulnerabilities:
-
-====================
-Host info - docker container "debian:7"
-OS Name - debian, OS Version - 7
-Total provided packages: 80
-{
-    "result": "OK",
-    "data": {
-        "packages": {},
-        "vulnerabilities": []
-    }
-}
-Vulnerabilities:
+Total found packages: 0
+==========================================
+Host info - docker container "java:8-jre"
+OS Name - debian, OS Version - 8
+Total found packages: 166
+Vulnerable packages:
+    libgcrypt20 1.6.3-2+deb8u1 amd64
+        DSA-3650 - 'libgcrypt20 -- security update', cvss.score - 0.0
+    libexpat1 2.1.0-6+deb8u2 amd64
+        DSA-3597 - 'expat -- security update', cvss.score - 7.8
+    perl-base 5.20.2-3+deb8u4 amd64
+        DSA-3628 - 'perl -- security update', cvss.score - 0.0
+    gnupg 1.4.18-7+deb8u1 amd64
+        DSA-3649 - 'gnupg -- security update', cvss.score - 0.0
+    gpgv 1.4.18-7+deb8u1 amd64
+        DSA-3649 - 'gnupg -- security update', cvss.score - 0.0
 ```
 

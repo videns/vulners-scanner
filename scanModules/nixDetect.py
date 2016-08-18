@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 __author__ = 'videns'
-from osDetect import ScannerInterface
-import re
+from scanModules.osDetect import ScannerInterface
+
 
 class nixDetect(ScannerInterface):
     def osDetect(self):
