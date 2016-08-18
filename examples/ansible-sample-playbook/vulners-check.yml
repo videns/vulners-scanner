@@ -1,0 +1,19 @@
+- hosts: centos
+#  strategy: debug
+  tasks:
+   - name: dpkg-query
+     shell: dpkg-query -W -f='${Package} ${Version} ${Architecture}\n'
+     register: packages
+     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+   - name: rpm-query
+     shell: rpm -qa
+     register: packages
+     when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+   - name: Check for vulns against vulners.com
+     vulners_check:
+      os_distrib: "{{ ansible_distribution }}"
+      os_version: "{{ ansible_distribution_major_version }}"
+      os_packages: "{{ packages.stdout_lines }}"
+     register: result
+
+   - debug: var=result
