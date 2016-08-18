@@ -2,7 +2,7 @@
 
 This is the sample ansible playbook to check for vulnerabilities in your packages via new vulners.com audit API.
 
-Populate hosts file with your hosts (currently checked on Debian 8, Ubuntu 14.04 and Cento 6.8).
+Populate hosts file with your hosts (currently checked on Debian 8, Ubuntu 14.04 and Centos 6.8).
 
 Edit `- hosts: centos` part of vulners-check.yml to match your hosts and groups.
 If you need to debug playbook, uncomment `strategy: debug` part.
