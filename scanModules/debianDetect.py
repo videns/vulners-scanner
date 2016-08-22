@@ -20,8 +20,8 @@ class debBasedDetect(linuxDetect):
                 return (osVersion, osFamily, osDetectionWeight)
 
         version = self.sshCommand("cat /etc/debian_version")
-        if version and re.search("(\d+)\.",version):
-            osVersion = re.search("(\d+)\.",version).group(1)
+        if version and re.search(r"(\d+)\.",version):
+            osVersion = re.search(r"(\d+)\.",version).group(1)
             osFamily = "debian"
             osDetectionWeight = 60
             return (osVersion, osFamily, osDetectionWeight)
