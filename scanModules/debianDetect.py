@@ -20,11 +20,22 @@ class debBasedDetect(linuxDetect):
                 return (osVersion, osFamily, osDetectionWeight)
 
         version = self.sshCommand("cat /etc/debian_version")
-        if version:
+        if version and re.search("(\d+)\.",version):
             osVersion = re.search("(\d+)\.",version).group(1)
             osFamily = "debian"
             osDetectionWeight = 60
             return (osVersion, osFamily, osDetectionWeight)
+
+        version = self.sshCommand("cat /etc/lsb-release")
+        if version:
+            mID = re.search("^DISTRIB_ID=\"?(.*?)\"?",version,re.MULTILINE)
+            mVer = re.search("^DISTRIB_RELEASE=\"?(.*?)\"?", version, re.MULTILINE)
+            if mID and mVer:
+                osFamily = mID.group(1).lower()
+                osVersion = mVer.group(1).lower()
+                osDetectionWeight = 60
+                return (osVersion, osFamily, osDetectionWeight)
+
 
 
     def getPkg(self):
