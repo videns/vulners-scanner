@@ -34,14 +34,23 @@ class LazyScanner():
     def getOSInfo(self):
         version = self.sshCommand("cat /etc/os-release")
         if version:
-            osFamily = re.search("^ID=\"?(\w+)\"?",version,re.MULTILINE).group(1)
-            osVersion = re.search("^VERSION_ID=\"?(\w+)\"?",version,re.MULTILINE).group(1)
+            reFamily = re.search("^ID=\"?(\w+)\"?",version,re.MULTILINE)
+            if reFamily:
+                osFamily = reFamily.group(1).lower()
+            else:
+                return
+
+            reVersion = re.search("^VERSION_ID=\"?(\w+)\"?",version,re.MULTILINE)
+            if reVersion:
+                osVersion = reVersion.group(1).lower()
+            else:
+                return
             return (osFamily, osVersion)
 
     def getPackages(self, osName):
         if osName in ('debian','ubuntu', 'kali'):
             cmd = "dpkg-query -W -f='${Package} ${Version} ${Architecture}\n'"
-        elif osName in ('redhat', 'centos', 'oraclelinux', 'suse', 'fedora'):
+        elif osName in ('rhel', 'centos', 'oraclelinux', 'suse', 'fedora'):
             cmd = "rpm -qa"
         else:
             cmd = None
@@ -51,7 +60,7 @@ class LazyScanner():
     def auditSystem(self):
         osInfo = self.getOSInfo()
         if not osInfo:
-            print("Couldn't detect OS")
+            print("Can't detect OS, try linuxScanner.py instead")
             return
         print("OS Name - %s, OS Version - %s" % (osInfo[0], osInfo[1]))
 

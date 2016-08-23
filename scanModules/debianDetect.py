@@ -8,6 +8,17 @@ from scanModules.linuxDetect import linuxDetect
 class debBasedDetect(linuxDetect):
     def __init__(self,sshPrefix):
         self.supportedFamilies = ('debian','ubuntu', 'kali')
+        self.debCodenames = {'stretch':'9',
+                             'jessie':'8',
+                             'wheezy':'7',
+                             'squeeze':'6',
+                             'lenny':'5',
+                             'etch':'4',
+                             'sarge':'3.1',
+                             'woody':'3.0',
+                             'potato':'2.2',
+                             'slink':'2.1',
+                             'hamm':'2.0'}
         super(debBasedDetect, self).__init__(sshPrefix)
 
     def osDetect(self):
@@ -20,11 +31,18 @@ class debBasedDetect(linuxDetect):
                 return (osVersion, osFamily, osDetectionWeight)
 
         version = self.sshCommand("cat /etc/debian_version")
-        if version and re.search(r"(\d+)\.",version):
-            osVersion = re.search(r"(\d+)\.",version).group(1)
+        if version and re.match(r"^[\d\.]+$",version):
+            osVersion = version
             osFamily = "debian"
             osDetectionWeight = 60
             return (osVersion, osFamily, osDetectionWeight)
+        elif version and re.match(r"^\w+/\w+",version):
+            osCodename = re.search(r"^(\w+)/",version).group(1).lower()
+            if osCodename in self.debCodenames:
+                osVersion = self.debCodenames[osCodename]
+                osFamily = "debian"
+                osDetectionWeight = 60
+                return (osVersion, osFamily, osDetectionWeight)
 
         version = self.sshCommand("cat /etc/lsb-release")
         if version:
