@@ -76,6 +76,7 @@ class LazyScanner():
                    'package':installedPackages}
         req = urllib2.Request(VULNERS_LINKS.get('pkgChecker'))
         req.add_header('Content-Type', 'application/json')
+        req.add_header('User-Agent', 'vulners-lazy-scanner-v0.1')
         response = urllib2.urlopen(req, json.dumps(payload).encode('utf-8'))
         responseData = response.read()
         if isinstance(responseData, bytes):
