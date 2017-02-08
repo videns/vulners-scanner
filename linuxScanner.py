@@ -52,6 +52,7 @@ class scannerEngine():
     def sendVulnRequest(self, url, payload):
         req = urllib2.Request(url)
         req.add_header('Content-Type', 'application/json')
+        req.add_header('User-Agent', 'vulners-scanner-v0.1')
         response = urllib2.urlopen(req, json.dumps(payload).encode('utf-8'))
         responseData = response.read()
         if isinstance(responseData, bytes):
