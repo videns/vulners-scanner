@@ -35,8 +35,8 @@ class rpmBasedDetect(linuxDetect):
 
 
     def getPkg(self):
-        pkgList = self.sshCommand("rpm -qa | grep -v '^kernel-'")
+        pkgList = self.sshCommand("rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | grep -v '^kernel-'")
         uname = self.sshCommand("uname -r")
-        pkgList += self.sshCommand("rpm -qa |grep '^kernel.*" + uname + "'")
+        pkgList += self.sshCommand("rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | grep '^kernel.*" + uname + "'")
         return pkgList.splitlines()
 
