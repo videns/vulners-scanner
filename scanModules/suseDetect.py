@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'videns'
+__author__ = 'holmboe'
 import re
 
 from scanModules.linuxDetect import linuxDetect
@@ -19,24 +19,16 @@ class rpmBasedDetect(linuxDetect):
                 osDetectionWeight = 60
                 return (osVersion, osFamily, osDetectionWeight)
 
-        version = self.sshCommand("cat /etc/centos-release")
+        version = self.sshCommand("cat /etc/SuSE-release").splitlines()[0]
         if version:
-            osVersion = re.search("\s+(\d+)\.",version).group(1)
-            osFamily = "centos"
+            osVersion = re.search("\w{4}\s+(\d+)",version).group(1)
+            osFamily = "sles"
             osDetectionWeight = 70
             return (osVersion, osFamily, osDetectionWeight)
 
-        version = self.sshCommand("cat /etc/redhat-release")
-        if version:
-            osVersion = re.search("\s+(\d+)\.",version).group(1)
-            osFamily = "rhel"
-            osDetectionWeight = 60
-            return (osVersion, osFamily, osDetectionWeight)
-
-
     def getPkg(self):
         pkgList = self.sshCommand("rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | grep -v '^kernel-'")
-        uname = self.sshCommand("uname -r")
+        uname = self.sshCommand("uname -r").rstrip("-default")
         pkgList += self.sshCommand("rpm -qa --qf '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n' | grep '^kernel.*" + uname + "'")
         return pkgList.splitlines()
 
