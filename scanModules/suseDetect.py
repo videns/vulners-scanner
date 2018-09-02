@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__author__ = 'videns'
+__author__ = 'holmboe'
 import re
 
 from scanModules.linuxDetect import linuxDetect
